@@ -39,7 +39,6 @@ class Engine:
 
     def start(self):
         self.import_config("D:\\Github Projects\\Automated Backups\\config.json")
-        #self.import_config("D:\Projects\Python\Automated Backups\config.json")
         self.parse()
         self.copy()
 

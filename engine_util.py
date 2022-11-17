@@ -1,13 +1,15 @@
 from datetime import date
 
+
 def empty(obj):
-    is_null = (obj == None)
+    is_null = (obj is None)
     is_empty = (obj == '')
 
-    return (is_null or is_empty)
+    return is_null or is_empty
+
 
 def get_file_name(dir):
-    if(empty(dir)):
+    if empty(dir):
         raise Exception('Empty file path')
 
     spl = dir.split('\\')
