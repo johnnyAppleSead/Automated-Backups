@@ -3,6 +3,10 @@
       {
         "source":"C:\\Users\\johna\\Desktop\\TestDir1\\test.txt.txt",
         "target":"C:\\Users\\johna\\Desktop\\TestDir2"
+      },
+      {
+        "source":"C:\\Users\\johna\\Desktop\\TestDir1\\5K Music List.txt",
+        "target":"C:\\Users\\johna\\Desktop\\TestDir2"
       }
     ]
 }
