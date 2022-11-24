@@ -22,19 +22,22 @@ class Cleaner:
 
     def __process(self):
         if self.disable_cleaner:
-            util.log("Clean disabled. Cleaner stopped", "HIGHf")
+            util.log("Clean disabled. Cleaner stopped", "HIGH")
             return
 
         now = time.time()
         target_directories = self.config.get_value(key="target_directories")
-        for key in target_directories:
-            directory = target_directories[key]
-            print("searching dir: " + directory)
-            for f in os.listdir(directory):
-                f = os.path.join(directory, f)
-                if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
-                    if os.path.isfile(f):
-                        self.__delete(f)
+
+        for target in target_directories:
+            target_obj = target_directories[target]
+            if target_obj["type"] == "local":
+                key = target_obj["target"]
+                directory = target_directories[key]
+                for f in os.listdir(directory):
+                    f = os.path.join(directory, f)
+                    if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
+                        if os.path.isfile(f):
+                            self.__delete(f)
 
     def start(self):
         try:

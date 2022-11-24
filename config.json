@@ -4,8 +4,15 @@
     "disable_cleaner": false
   },
   "target_directories": {
-    "main_dir": "D:\\Automated Backup Files",
-    "secondary_dir": "C:\\Users\\johna\\Desktop\\testDir2"
+    "main_dir": {
+      "target": "D:\\Automated Backup Files",
+      "type": "local"
+    },
+    "s3": {
+      "target": "automated-backup-jwsa",
+      "type": "s3",
+      "credentials": "C:\\Users\\johna\\Documents\\automated_backup_cloud_creds.json"
+    }
   },
   "files": [
     {
@@ -14,19 +21,19 @@
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Check Register.xlsx",
-      "target": "D:\\Automated Backup Files"
+      "target": "dir:s3"
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Orlando Vacation - 2023.xlsx",
-      "target": "D:\\Automated Backup Files"
+      "target": "dir:main_dir"
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\August Vegas 2023 Trip.xlsx",
-      "target": "D:\\Automated Backup Files"
+      "target": "dir:main_dir"
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Measurements.xlsx",
-      "target": "D:\\Automated Backup Files"
+      "target": "dir:main_dir"
     }
   ]
 }

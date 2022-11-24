@@ -13,6 +13,7 @@ class ConfigUtil:
         if util.empty(self.config_dir):
             raise KeyError("Missing environment variable: " + self.__env_var)
 
+
     def load(self):
         self.__config = self.__import_config(self.config_dir)
         files = self.__parse()
@@ -51,20 +52,18 @@ class ConfigUtil:
             for config in file_configs:
                 source = config["source"]
                 target = config["target"]
-
                 if not util.empty(target_dirs):
                     if target.startswith("dir:"):
                         target_key = target.split("dir:")[1]
                         target_dir = target_dirs[target_key]
 
                         if not util.empty(target_dir):
-                            target = target_dir
-
+                            target = target_dir["target"]
                 if util.empty(source) is False and util.empty(target) is False:
                     copied_file_name = util.get_file_name(source)
-                    file = File(source, target, copied_file_name)
+                    file = File(source, target, copied_file_name, target_dir["type"])
                     files.append(file)
                 else:
-                    util.log("File config has empty source or target")
+                    util.log("File config has empty source or target", "HIGH")
 
             return files
