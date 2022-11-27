@@ -46,22 +46,25 @@ class ConfigUtil:
 
     def __parse(self):
         files = []
-        file_configs = self.config['files']
+        file_configs = self.config['files_2']
         if not util.empty(file_configs):
             target_dirs = self.config['target_directories']
             for config in file_configs:
                 source = config["source"]
-                target = config["target"]
-                if not util.empty(target_dirs):
-                    if target.startswith("dir:"):
-                        target_key = target.split("dir:")[1]
-                        target_dir = target_dirs[target_key]
+                targets = config["target"]
+                file_targets = []
+                for target in targets:
+                    if not util.empty(target_dirs):
+                        if target.startswith("dir:"):
+                            target_key = target.split("dir:")[1]
+                            target_dir = target_dirs[target_key]
 
-                        if not util.empty(target_dir):
-                            target = target_dir["target"]
+                            if not util.empty(target_dir):
+                                file_targets.append(target_dir)
+                            # Later need to append unmanaged target directories
                 if util.empty(source) is False and util.empty(target) is False:
                     copied_file_name = util.get_file_name(source)
-                    file = File(source, target, copied_file_name, target_dir["type"])
+                    file = File(source, file_targets, copied_file_name, target_dir["type"])
                     files.append(file)
                 else:
                     util.log("File config has empty source or target", "HIGH")

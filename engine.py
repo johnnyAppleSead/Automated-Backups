@@ -12,19 +12,23 @@ class Engine:
     # The actual copying service
     def copy(self):
         for file in self.files:
+            print("target: ", file.targets)
             if util.empty(file.source) or util.empty(file.target):
                 raise Exception("Configuration file missing source or target directory data")
 
             util.log("Beginning copy process for " + file.source + " to " + file.target)
 
-            target = file.target
+            targets = file.target
             target_type = file.target_type
+
+            for target in targets:
+                print(target)
 
             if target_type == "local":
                 shutil.copy(file.source, (file.target + "\\" + file.target_file_name))
 
             if target_type == "s3":
-                s3 = S3(target)
+                s3 = S3(targets)
                 s3.upload(file)
 
             util.log("Copy process ended for " + file.source + " to " + file.target)

@@ -14,6 +14,14 @@
       "credentials": "C:\\Users\\johna\\Documents\\automated_backup_cloud_creds.json"
     }
   },
+  "files_2": [
+    {
+      "source": "C:\\Users\\johna\\Desktop\\Measurements.xlsx",
+      "target": [
+        "dir:main_dir","dir:s3"
+      ]
+    }
+  ],
   "files": [
     {
       "source": "C:\\Users\\johna\\Desktop\\December Vegas 2022 Trip.xlsx",
