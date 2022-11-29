@@ -14,34 +14,26 @@
       "credentials": "C:\\Users\\johna\\Documents\\automated_backup_cloud_creds.json"
     }
   },
-  "files_2": [
-    {
-      "source": "C:\\Users\\johna\\Desktop\\Measurements.xlsx",
-      "target": [
-        "dir:main_dir","dir:s3"
-      ]
-    }
-  ],
   "files": [
     {
       "source": "C:\\Users\\johna\\Desktop\\December Vegas 2022 Trip.xlsx",
-      "target": "dir:main_dir"
+      "target": ["dir:main_dir"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Check Register.xlsx",
-      "target": "dir:s3"
+      "target": ["dir:s3"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Orlando Vacation - 2023.xlsx",
-      "target": "dir:main_dir"
+      "target": ["dir:main_dir"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\August Vegas 2023 Trip.xlsx",
-      "target": "dir:main_dir"
+      "target": ["dir:main_dir"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Measurements.xlsx",
-      "target": "dir:main_dir"
+      "target": ["dir:main_dir"]
     }
   ]
 }
