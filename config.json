@@ -17,7 +17,7 @@
   "files": [
     {
       "source": "C:\\Users\\johna\\Desktop\\December Vegas 2022 Trip.xlsx",
-      "target": ["dir:main_dir"]
+      "target": ["dir:main_dir", "C:\\Users\\johna\\Desktop\\TestDir2"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Check Register.xlsx",

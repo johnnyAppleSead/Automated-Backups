@@ -68,8 +68,7 @@ class ConfigUtil:
                             })
                             # Later need to append unmanaged target directories
                 if util.empty(source) is False and util.empty(target) is False:
-                    copied_file_name = util.get_file_name(source)
-                    file = File(source, file_targets, copied_file_name)
+                    file = File(source, file_targets)
                     files.append(file)
                 else:
                     util.log("File config has empty source or target", "HIGH")
