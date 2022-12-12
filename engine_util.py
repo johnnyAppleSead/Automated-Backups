@@ -1,6 +1,5 @@
 
 
-
 def empty(obj):
     is_null = (obj is None)
     is_empty = (obj == '')
