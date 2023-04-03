@@ -1,7 +1,7 @@
 {
   "options":{
     "days_to_preserve": 90,
-    "disable_cleaner": false
+    "disable_cleaner": true
   },
   "target_directories": {
     "main_dir": {
@@ -11,6 +11,7 @@
     "s3": {
       "target": "automated-backup-jwsa",
       "type": "s3",
+      "cloud_directory": true,
       "credentials": "C:\\Users\\johna\\Documents\\automated_backup_cloud_creds.json"
     }
   },
@@ -25,7 +26,7 @@
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Orlando Vacation - 2023.xlsx",
-      "target": ["dir:main_dir"]
+      "target": ["dir:main_dir", "dir:s3"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\August Vegas 2023 Trip.xlsx",
