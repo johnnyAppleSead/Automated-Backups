@@ -70,7 +70,8 @@ class ConfigUtil:
                         else:
                             file_targets.append({
                                 "target": target,
-                                "type": "local"
+                                "type": "local",
+                                "subtype": "local"
                             })
                             # Later need to append unmanaged target directories
                 if self.util.empty(source) is False and self.util.empty(target) is False:

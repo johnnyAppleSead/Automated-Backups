@@ -12,7 +12,6 @@ class Engine:
         self.files = []
         self.config = ConfigUtil()
         self.__options = self.config.get_value("options")
-
         #self.logger = Logger(self.__options['disable_logging'])
 
         self.util = Util()
@@ -37,10 +36,12 @@ class Engine:
                                             self.__generate_calculated_directory_name())
 
                     if self.__does_calculated_directory_exist(target_endpoint) is False:
-                        self.util.log("Creating new directory" + calculated_endpoint)
+                        self.util.log("Creating new directory: " + calculated_endpoint)
                         os.makedirs(calculated_endpoint)
-
-                    shutil.copy(file.source, os.path.join(calculated_endpoint, file.target_file_name))
+                    try:
+                        shutil.copy(file.source, os.path.join(calculated_endpoint, file.target_file_name))
+                    except FileNotFoundError:
+                        self.util.log("Unable to copy file: File Does Not Exist")
 
                 if target_type == "remote" and target_subtype == "s3":
                     s3 = S3(target_endpoint)

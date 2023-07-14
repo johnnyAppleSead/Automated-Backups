@@ -12,8 +12,7 @@ class Cleaner:
         options = self.config.get_value(key="options")
         if not self.util.empty(options):
             self.__days_to_preserve = options['days_to_preserve']
-
-        self.disable_cleaner = options["disable_cleaner"]
+            self.disable_cleaner = options["disable_cleaner"]
 
         self.util.log("Cleaner initialized")
 
@@ -23,6 +22,7 @@ class Cleaner:
             os.remove(file_dir)
 
     def __process(self):
+        self.disable_cleaner = True
         if self.disable_cleaner:
             self.util.log("Clean disabled. Cleaner stopped")
             return

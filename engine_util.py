@@ -1,14 +1,14 @@
 from logger import Logger
-from config_util import ConfigUtil
+#from config_util import ConfigUtil
 
 
 class Util:
     def __init__(self):
-        self.config = ConfigUtil()
-        self.__options = self.config.get_value("options")
-        disable_logger = self.__options["disable_logger"]
+        #self.config = ConfigUtil()
+        #self.__options = self.config.get_value("options")
+        #disable_logger = self.__options["disable_logger"]
 
-        self.logger = Logger(disable_logger)
+        self.logger = Logger(False)
 
     def log(self, msg, verbosity="High"):
         if not self.empty(msg):
