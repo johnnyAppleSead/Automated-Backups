@@ -1,3 +1,4 @@
+from datetime import datetime
 class Logger:
     def __init__(self, disable_logger=False):
         self.disable_logger = disable_logger
@@ -16,8 +17,9 @@ class Logger:
         log_file = "C:\\Users\\johna\\Documents\\automated_backup_log.txt" # Need to update this from static to dynamic
 
         try:
+            now = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
             file = open(log_file, "a")
-            file.write(log_message + "\n")
+            file.write(now + " - " + log_message + "\n")
             file.close()
         except FileNotFoundError:
             print("WARN:Unable to log due to a file issue: " + log_message)
