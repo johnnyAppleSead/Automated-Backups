@@ -1,25 +1,21 @@
+from logger import Logger
+from config_util import ConfigUtil
 
 
-def empty(obj):
-    is_null = (obj is None)
-    is_empty = (obj == '')
+class Util:
+    def __init__(self):
+        self.config = ConfigUtil()
+        self.__options = self.config.get_value("options")
+        disable_logger = self.__options["disable_logger"]
 
-    return is_null or is_empty
+        self.logger = Logger(disable_logger)
 
+    def log(self, msg, verbosity="High"):
+        if not self.empty(msg):
+            self.logger.log(msg, verbosity)
 
-def log(log_message, verbosity=None):
-    if log_message is None or log_message == "":
-        return
+    def empty(self, obj):
+        is_null = (obj is None)
+        is_empty = (obj == '')
 
-    if verbosity == "HIGH":
-        print(log_message)
-
-    log_file = "C:\\Users\\johna\\Documents\\automated_backup_log.txt"
-
-    try:
-        file = open(log_file, "a")
-        file.write(log_message + "\n")
-        file.close()
-    except FileNotFoundError:
-        print("WARN:Unable to log due to a file issue: " + log_message)
-
+        return is_null or is_empty

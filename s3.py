@@ -1,27 +1,27 @@
 import boto3
-from botocore.exceptions import ClientError
-import os
 from config_util import ConfigUtil
-from engine_util import empty, log
 import json
+
+from engine_util import Util
 
 
 class S3:
     def __init__(self, bucket, keys=None):
         self.bucket = bucket
+        self.util = Util()
 
         self.keys = keys
         if keys is None:
             target_dirs = ConfigUtil().get_value("target_directories")
             s3 = target_dirs["s3"]
-            if not empty(s3):
+            if not self.util.empty(s3):
                 creds = s3["credentials"]
-                if not empty(creds):
-                    log("Attempting to open S3 config file", "HIGH")
+                if not self.util.empty(creds):
+                    self.util.log("Attempting to open S3 config file")
                     file = open(creds, 'r')
                     self.keys = json.loads(file.read())
                     file.close()
-                    log("S3 config file successfully loaded.", "HIGH")
+                    self.util.log("S3 config file successfully loaded")
 
     def upload(self, file):
         try:
@@ -32,6 +32,6 @@ class S3:
             response = self.client.upload_file(file.source, self.bucket, file.target_file_name)
 
         except:
-            log("AWS Error Occurred", "HIGH")
+            self.util.log("AWS Error Occurred")
 
 

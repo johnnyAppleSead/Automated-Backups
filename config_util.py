@@ -1,17 +1,24 @@
 import json
-import engine_util as util
+
+from engine_util import Util
 from file import File
 import os
 
 
 class ConfigUtil:
-    def __init__(self):
+    def __init__(self, config_override=None):
         self.__config = ""
         self.__env_var = "automated_backup_config"
-        self.config_dir = os.environ.get(self.__env_var)
 
-        if util.empty(self.config_dir):
-            raise KeyError("Missing environment variable: " + self.__env_var)
+        if config_override is None:
+            self.config_dir = os.environ.get(self.__env_var)
+        else:
+            self.config_dir = config_override
+
+        self.util = Util()
+
+        if self.util.empty(self.config_dir):
+            raise KeyError("Invalid configuration file. Check the environment variable: " + self.__env_var)
 
     def load(self):
         self.__config = self.__import_config(self.config_dir)
@@ -20,33 +27,32 @@ class ConfigUtil:
         return files
 
     def get_value(self, key):
-        print(key)
-        if util.empty(key):
-            util.log("Cannot get config value for empty key", "HIGH")
+        if self.util.empty(key):
+            self.util.log("Cannot get config value for empty key")
             return
 
-        if util.empty(self.__config):
+        if self.util.empty(self.__config):
             self.load()
 
         return self.__config[key]
 
     def __import_config(self, file_path):
         try:
-            util.log("Attempting to open filepath: " + file_path, "HIGH")
+            self.util.log("Attempting to open filepath: " + file_path)
             file = open(file_path, 'r')
             self.config = json.loads(file.read())
             file.close()
 
-            if not util.empty(self.config):
-                util.log("Filepath " + file_path + " successfully opened")
+            if not self.util.empty(self.config):
+                self.util.log("Filepath " + file_path + " successfully opened")
                 return self.config
         except FileNotFoundError:
-            util.log("An error occurred while attempting to import the config file", "HIGH")
+            self.util.log("An error occurred while attempting to import the config file")
 
     def __parse(self):
         files = []
         file_configs = self.config['files']
-        if not util.empty(file_configs):
+        if not self.util.empty(file_configs):
             target_dirs = self.config['target_directories']
             for config in file_configs:
                 source = config["source"]
@@ -54,12 +60,12 @@ class ConfigUtil:
                 file_targets = []
 
                 for target in targets:
-                    if not util.empty(target_dirs):
+                    if not self.util.empty(target_dirs):
                         if target.startswith("dir:"):
                             target_key = target.split("dir:")[1]
                             target_dir = target_dirs[target_key]
 
-                            if not util.empty(target_dir):
+                            if not self.util.empty(target_dir):
                                 file_targets.append(target_dir)
                         else:
                             file_targets.append({
@@ -67,10 +73,10 @@ class ConfigUtil:
                                 "type": "local"
                             })
                             # Later need to append unmanaged target directories
-                if util.empty(source) is False and util.empty(target) is False:
+                if self.util.empty(source) is False and self.util.empty(target) is False:
                     file = File(source, file_targets)
                     files.append(file)
                 else:
-                    util.log("File config has empty source or target", "HIGH")
+                    self.util.log("File config has empty source or target")
 
             return files

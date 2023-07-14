@@ -1,9 +1,10 @@
-from engine_util import empty
+from engine_util import Util
 from datetime import date
 
 
+# Generates the file name for the copied file
 def get_file_name(directory):
-    if empty(directory):
+    if Util().empty(directory):
         raise Exception('Empty file path')
 
     spl = directory.split('\\')
@@ -17,13 +18,14 @@ def get_file_name(directory):
     return file_name_base + ' - ' + str(today) + '.' + spl2[1]
 
 
+# Maintains file source and target. Data not stored in this file
 class File:
     def __init__(self, source_dir, target_dir, target_file_name=None):
         self.source = source_dir
         self.targets = target_dir
         self.target_file_name = target_file_name
 
-        if empty(self.target_file_name):
+        if Util().empty(self.target_file_name):
             self.target_file_name = get_file_name(self.source)
 
 
