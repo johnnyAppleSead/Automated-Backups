@@ -9,13 +9,13 @@ class ConfigUtil:
     def __init__(self, config_override=None):
         self.__config = ""
         self.__env_var = "automated_backup_config"
+        self.util = Util()
 
         if config_override is None:
-            self.config_dir = os.environ.get(self.__env_var)
+            # directory of config file
+            self.config_dir = self.util.getEnvVariable(self.__env_var)
         else:
             self.config_dir = config_override
-
-        self.util = Util()
 
         if self.util.empty(self.config_dir):
             raise KeyError("Invalid configuration file. Check the environment variable: " + self.__env_var)

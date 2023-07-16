@@ -1,7 +1,8 @@
 {
   "options":{
     "days_to_preserve": 90,
-    "disable_cleaner": false
+    "disable_cleaner": false,
+    "disable_logging": false
   },
   "target_directories": {
     "main_dir": {

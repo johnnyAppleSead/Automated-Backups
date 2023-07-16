@@ -6,16 +6,20 @@ import os
 from datetime import date
 from engine_util import Util
 
+disallow_cleaner = False
+
 
 class Engine:
     def __init__(self):
+        global disallow_cleaner
+
         self.files = []
         self.config = ConfigUtil()
         self.__options = self.config.get_value("options")
-        #self.logger = Logger(self.__options['disable_logging'])
+
+        disallow_cleaner = self.__options['disable_logging']
 
         self.util = Util()
-
 
     # The actual copying service
     def copy(self):
@@ -32,8 +36,8 @@ class Engine:
 
                 if target_type == "local":
                     calculated_endpoint = self.__generate_calculated_directory_path(
-                                            target_endpoint,
-                                            self.__generate_calculated_directory_name())
+                        target_endpoint,
+                        self.__generate_calculated_directory_name())
 
                     if self.__does_calculated_directory_exist(target_endpoint) is False:
                         self.util.log("Creating new directory: " + calculated_endpoint)
@@ -72,4 +76,6 @@ class Engine:
 
 
 Engine().start()  # Performs the automated processes for automated backups
-Cleaner().start()  # Handles automatic cleanup for old files. Disabled via config file
+
+if not disallow_cleaner:
+    Cleaner().start()  # Handles automatic cleanup for old files. Disabled via config file

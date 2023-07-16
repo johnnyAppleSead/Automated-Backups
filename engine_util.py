@@ -1,4 +1,5 @@
 from logger import Logger
+import os
 #from config_util import ConfigUtil
 
 
@@ -19,3 +20,13 @@ class Util:
         is_empty = (obj == '')
 
         return is_null or is_empty
+
+    def getEnvVariable(self, key):
+        if self.empty(key):
+            self.log("Unable to retrieve env variable: Empty Environment Variable Key")
+
+        try:
+            return os.environ.get(key)
+        except:
+            print("Error retrieving env variable")
+            return ""

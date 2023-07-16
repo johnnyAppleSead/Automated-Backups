@@ -2,6 +2,7 @@ import os
 import time
 from config_util import ConfigUtil
 from engine_util import Util
+import shutil
 
 
 class Cleaner:
@@ -22,9 +23,8 @@ class Cleaner:
             os.remove(file_dir)
 
     def __process(self):
-        self.disable_cleaner = True
         if self.disable_cleaner:
-            self.util.log("Clean disabled. Cleaner stopped")
+            self.util.log("Cleaner disabled and will not start.")
             return
 
         now = time.time()
@@ -33,19 +33,30 @@ class Cleaner:
         for target in target_directories:
             target_obj = target_directories[target]
             if target_obj["type"] == "local":
-                key = target_obj["target"]
-                directory = target_directories[key]
+                directory = target_obj["target"]
+                # directory = target_directories[key]
+                # print("dir: ", directory)
                 for f in os.listdir(directory):
-                    f = os.path.join(directory, f)
-                    if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
-                        if os.path.isfile(f):
-                            self.__delete(f)
+
+                    if "Backup" in f:
+                        f = os.path.join(directory, f)
+
+                        try:
+                            if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
+                                shutil.rmtree(f)
+                        except OSError as e:
+                            print("Cleaner error deleting file: %s : %s" % (f, e.strerror))
+
+                    # if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
+                    #     if os.path.isfile(f):
+                    #         self.__delete(f)
+
 
     def start(self):
         try:
-            self.util.log("Beginning cleaning process")
+            self.util.log("Beginning cleaning process", "HIGH")
             self.__process()
-            self.util.log("Cleaning process complete")
+            self.util.log("Cleaning process complete", "HIGH")
         except KeyError:
             self.util.log("Config file missing key")
         except FileNotFoundError:
