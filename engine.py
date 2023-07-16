@@ -34,10 +34,12 @@ class Engine:
                 target_subtype = target["subtype"]
                 target_endpoint = target["target"]
 
+                target_directory_name = self.__generate_calculated_directory_name()
+
                 if target_type == "local":
                     calculated_endpoint = self.__generate_calculated_directory_path(
                         target_endpoint,
-                        self.__generate_calculated_directory_name())
+                        target_directory_name)
 
                     if self.__does_calculated_directory_exist(target_endpoint) is False:
                         self.util.log("Creating new directory: " + calculated_endpoint)
@@ -49,7 +51,7 @@ class Engine:
 
                 if target_type == "remote" and target_subtype == "s3":
                     s3 = S3(target_endpoint)
-                    s3.upload(file)
+                    s3.upload(file, target_directory_name)
 
             self.util.log("Copy process ended for " + file.source + " to " + file.target_file_name)
 

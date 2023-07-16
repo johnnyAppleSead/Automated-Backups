@@ -7,6 +7,7 @@ from engine_util import Util
 
 class S3:
     def __init__(self, bucket, keys=None):
+        self.client = None
         self.bucket = bucket
         self.util = Util()
 
@@ -23,15 +24,47 @@ class S3:
                     file.close()
                     self.util.log("S3 config file successfully loaded")
 
-    def upload(self, file):
-        try:
-            self.client = boto3.client('s3',
-                                       aws_access_key_id=self.keys["access_key_id"],
-                                       aws_secret_access_key=self.keys["secret_key"])
+    def connect(self):
+        self.client = boto3.client('s3',
+                                   aws_access_key_id=self.keys["access_key_id"],
+                                   aws_secret_access_key=self.keys["secret_key"])
 
-            response = self.client.upload_file(file.source, self.bucket, file.target_file_name)
+        self.util.log("S3 Connection Created")
+
+    def delete(self, folder):
+        try:
+            self.connect()
+
 
         except:
-            self.util.log("AWS Error Occurred")
+            self.util.log("AWS error occurred deleting S3 folder", folder)
+
+    def cleaner(self, days):
+        if days < 0:
+            days = days * -1
+
+        session = boto3.Session(aws_access_key_id=self.keys["access_key_id"],
+                                aws_secret_access_key=self.keys["secret_key"])
+
+        s3 = session.resource('s3')
+
+        r = s3.meta.client.list_objects(Bucket=self.bucket)
+        for a in r['Contents']:
+            print("a: ", a)
+
+        my_bucket = s3.Bucket(self.bucket)
+
+        print("d:", )
+
+        for b in my_bucket.objects.all():
+            print("b: ", b.key)
 
 
+    def upload(self, file, folder):
+        try:
+            self.connect()
+            response = self.client.upload_file(file.source, self.bucket, folder + "/" + file.target_file_name)
+
+            return response
+        except:
+            self.util.log("AWS error occurred uploading ", file, " into S3 folder ", folder)

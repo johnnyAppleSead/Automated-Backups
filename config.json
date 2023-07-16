@@ -24,7 +24,7 @@
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\Measurements.xlsx",
-      "target": ["dir:main_dir"]
+      "target": ["dir:main_dir", "dir:s3"]
     },
     {
       "source": "C:\\Users\\johna\\Desktop\\December Vegas 2022 Trip.xlsx",
