@@ -17,10 +17,12 @@ class Cleaner:
 
         self.util.log("Cleaner initialized")
 
-    def __delete(self, file_dir):
-        if not self.util.empty(file_dir) and os.path.isfile(file_dir):
-            self.util.log("Cleaner deleting file: " + file_dir)
-            os.remove(file_dir)
+    def __delete_directory(self, file_dir):
+        if not self.util.empty(file_dir) and os.path.isdir(file_dir):
+            try:
+                shutil.rmtree(file_dir)
+            except OSError as e:
+                print("Cleaner error deleting file: %s : %s" % (file_dir, e.strerror))
 
     def __process(self):
         if self.disable_cleaner:
@@ -34,23 +36,13 @@ class Cleaner:
             target_obj = target_directories[target]
             if target_obj["type"] == "local":
                 directory = target_obj["target"]
-                # directory = target_directories[key]
-                # print("dir: ", directory)
+
                 for f in os.listdir(directory):
 
                     if "Backup" in f:
                         f = os.path.join(directory, f)
-
-                        try:
-                            if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
-                                shutil.rmtree(f)
-                        except OSError as e:
-                            print("Cleaner error deleting file: %s : %s" % (f, e.strerror))
-
-                    # if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
-                    #     if os.path.isfile(f):
-                    #         self.__delete(f)
-
+                        if os.stat(f).st_mtime < now - (86400 * self.__days_to_preserve):
+                            self.__delete_directory(f)
 
     def start(self):
         try:
