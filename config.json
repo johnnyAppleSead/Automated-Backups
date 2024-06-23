@@ -1,34 +1,46 @@
 {
   "options":{
     "days_to_preserve": 90,
-    "disable_cleaner": false,
+    "disable_cleaner": true,
     "disable_logging": false
   },
   "target_directories": {
     "main_dir": {
       "target": "D:\\Automated Backup Files",
       "type": "local",
-      "subtype": "local"
+      "subtype": "local",
+      "status": "active"
     },
     "s3": {
       "target": "automated-backup-jwsa",
       "type": "remote",
       "subtype": "s3",
+      "status": "disabled",
       "credentials": "C:\\Users\\johna\\Documents\\automated_backup_cloud_creds.json"
+    },
+    "flash": {
+      "target": "F:\\Automated Backup Files",
+      "type": "local",
+      "subtype": "removable",
+      "status": "active"
     }
   },
   "files": [
     {
-      "source": "C:\\Users\\johna\\Desktop\\Check Register.xlsx",
-      "target": ["dir:main_dir"]
+      "source": "D:\\System\\Desktop\\Check Register.xlsx",
+      "target": ["dir:main_dir", "dir:flash"]
     },
     {
-      "source": "C:\\Users\\johna\\Desktop\\Measurements.xlsx",
-      "target": ["dir:main_dir", "dir:s3"]
+      "source": "D:\\System\\Desktop\\UO + Hawaii Cruise - October 2024 v4.xlsx",
+      "target": ["dir:main_dir", "dir:flash"]
     },
     {
-      "source": "C:\\Users\\johna\\Desktop\\December Vegas 2022 Trip.xlsx",
-      "target": ["dir:main_dir", "C:\\Users\\johna\\Desktop\\TestDir2"]
+      "source": "D:\\System\\Desktop\\UO + Cruise March 2025 v2.xlsx",
+      "target": ["dir:main_dir", "dir:flash"]
+    },
+    {
+      "source": "D:\\System\\Desktop\\Vacations et al\\Templates\\Generic Vacation Template v6_1.xlsx",
+      "target": ["dir:main_dir", "dir:flash"]
     }
   ]
 }

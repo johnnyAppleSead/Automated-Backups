@@ -30,3 +30,6 @@ class Util:
         except:
             print("Error retrieving env variable")
             return ""
+
+    def does_directory_exist(self, directory):
+        return os.path.exists(directory)

@@ -43,21 +43,29 @@ class S3:
         if days < 0:
             days = days * -1
 
-        session = boto3.Session(aws_access_key_id=self.keys["access_key_id"],
-                                aws_secret_access_key=self.keys["secret_key"])
+        self.connect()
+        objects = self.client.list_objects_v2(Bucket=self.bucket)
 
-        s3 = session.resource('s3')
+        for object in objects['Contents']:
+            print(object)
 
-        r = s3.meta.client.list_objects(Bucket=self.bucket)
-        for a in r['Contents']:
-            print("a: ", a)
+        # session = boto3.Session(aws_access_key_id=self.keys["access_key_id"],
+        #                         aws_secret_access_key=self.keys["secret_key"])
 
-        my_bucket = s3.Bucket(self.bucket)
+        # s3 = session.resource('s3')
 
-        print("d:", )
+        # r = s3.meta.client.list_objects(Bucket=self.bucket)
+        # for a in r['Contents']:
+        #     key = a["Key"]
 
-        for b in my_bucket.objects.all():
-            print("b: ", b.key)
+
+        # my_bucket = s3.Bucket(self.bucket)
+        #
+        # print("d:", )
+        #
+        # for b in my_bucket.objects.all():
+        #     print(b)
+        #     print("b: ", b.key)
 
 
     def upload(self, file, folder):

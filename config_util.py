@@ -26,6 +26,17 @@ class ConfigUtil:
 
         return files
 
+    def does_key_exist(self, key):
+        if self.util.empty(key):
+            return
+
+        if self.util.empty(self.__config):
+            self.load()
+
+        print("Key: " + key + " / " + (key in self.__config))
+
+        return key in self.__config
+
     def get_value(self, key):
         if self.util.empty(key):
             self.util.log("Cannot get config value for empty key")

@@ -34,6 +34,12 @@ class Engine:
                 target_subtype = target["subtype"]
                 target_endpoint = target["target"]
 
+                target_status = target["status"]
+
+                if target_status == "disabled":
+                    self.util.log("Target Endpoint (" + target_endpoint + ") is disabled")
+                    continue
+
                 target_directory_name = self.__generate_calculated_directory_name()
 
                 if target_type == "local":
@@ -52,6 +58,7 @@ class Engine:
                 if target_type == "remote" and target_subtype == "s3":
                     s3 = S3(target_endpoint)
                     s3.upload(file, target_directory_name)
+
 
             self.util.log("Copy process ended for " + file.source + " to " + file.target_file_name)
 

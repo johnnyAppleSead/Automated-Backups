@@ -27,7 +27,7 @@ class Cleaner:
 
     def __process(self):
         if self.disable_cleaner:
-            self.util.log("Cleaner disabled and will not start.")
+            self.util.log("Cleaner disabled and will not start.", "HIGH")
             return
 
         now = time.time()
