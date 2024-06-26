@@ -9,38 +9,38 @@
       "target": "D:\\Automated Backup Files",
       "type": "local",
       "subtype": "local",
-      "status": "active"
+      "status": "disabled"
     },
     "s3": {
       "target": "automated-backup-jwsa",
       "type": "remote",
       "subtype": "s3",
-      "status": "disabled",
-      "credentials": "C:\\Users\\johna\\Documents\\automated_backup_cloud_creds.json"
+      "status": "active",
+      "credentials": "D:\\System\\Documents\\automated_backup_cloud_creds.json"
     },
     "flash": {
       "target": "F:\\Automated Backup Files",
       "type": "local",
       "subtype": "removable",
-      "status": "active"
+      "status": "disabled"
     }
   },
   "files": [
     {
       "source": "D:\\System\\Desktop\\Check Register.xlsx",
-      "target": ["dir:main_dir", "dir:flash"]
+      "target": ["dir:main_dir", "dir:flash", "dir:s3"]
     },
     {
       "source": "D:\\System\\Desktop\\UO + Hawaii Cruise - October 2024 v4.xlsx",
-      "target": ["dir:main_dir", "dir:flash"]
+      "target": ["dir:main_dir", "dir:flash", "dir:s3"]
     },
     {
       "source": "D:\\System\\Desktop\\UO + Cruise March 2025 v2.xlsx",
-      "target": ["dir:main_dir", "dir:flash"]
+      "target": ["dir:main_dir", "dir:flash", "dir:s3"]
     },
     {
       "source": "D:\\System\\Desktop\\Vacations et al\\Templates\\Generic Vacation Template v6_1.xlsx",
-      "target": ["dir:main_dir", "dir:flash"]
+      "target": ["dir:main_dir", "dir:flash", "dir:s3"]
     }
   ]
 }

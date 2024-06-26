@@ -12,7 +12,7 @@ class S3:
         self.util = Util()
 
         self.keys = keys
-        if keys is None:
+        if self.keys is None:
             target_dirs = ConfigUtil().get_value("target_directories")
             s3 = target_dirs["s3"]
             if not self.util.empty(s3):
@@ -29,7 +29,11 @@ class S3:
                                    aws_access_key_id=self.keys["access_key_id"],
                                    aws_secret_access_key=self.keys["secret_key"])
 
-        self.util.log("S3 Connection Created")
+        self.util.log("S3 Connection Created", "HIGH")
+
+    def close(self):
+        self.util.log("S3 Connection Closed", "HIGH")
+        self.client.close()
 
     def delete(self, folder):
         try:
@@ -49,30 +53,13 @@ class S3:
         for object in objects['Contents']:
             print(object)
 
-        # session = boto3.Session(aws_access_key_id=self.keys["access_key_id"],
-        #                         aws_secret_access_key=self.keys["secret_key"])
-
-        # s3 = session.resource('s3')
-
-        # r = s3.meta.client.list_objects(Bucket=self.bucket)
-        # for a in r['Contents']:
-        #     key = a["Key"]
-
-
-        # my_bucket = s3.Bucket(self.bucket)
-        #
-        # print("d:", )
-        #
-        # for b in my_bucket.objects.all():
-        #     print(b)
-        #     print("b: ", b.key)
-
 
     def upload(self, file, folder):
         try:
             self.connect()
             response = self.client.upload_file(file.source, self.bucket, folder + "/" + file.target_file_name)
+            self.close()
 
             return response
         except:
-            self.util.log("AWS error occurred uploading ", file, " into S3 folder ", folder)
+            self.util.log("AWS error occurred uploading " + file + " into S3 folder " + folder, "HIGH")

@@ -14,7 +14,7 @@ class Logger:
         if verbosity == "HIGH":
             print(log_message)
 
-        log_file = "C:\\Users\\johna\\Documents\\automated_backup_log.txt" # Need to update this from static to dynamic
+        log_file = "D:\\System\\Documents\\automated_backup_log.txt" # Need to update this from static to dynamic
 
         try:
             now = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
